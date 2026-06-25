@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>YouTube SEO Tool · Title, Description, Tags, Hashtags</title>
+  <!-- SEO Meta -->
+  <meta name="description" content="Dynamic YouTube SEO tool: generate titles, descriptions, tags, hashtags & optimize video content. AdSense ready with dedicated ad slots.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://youtubeseotool.example.com/">
+  <!-- Schema.org structured data (optional but good) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "YouTube SEO Tool",
+    "description": "Generate optimized YouTube titles, descriptions, tags, and hashtags. Includes AdSense ad slots.",
+    "applicationCategory": "SEO Tool",
+    "operatingSystem": "All",
+    "browserRequirements": "JavaScript enabled"
+  }
+  </script>
+  <!-- Google Fonts & Font Awesome for icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #f4f6fa;
+      color: #1e293b;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    /* header & cards */
+    .card {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+      padding: 28px 30px;
+      margin-bottom: 30px;
+      transition: 0.2s;
+      border: 1px solid #e9edf4;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .card-header i {
+      font-size: 28px;
+      color: #ff0033;
+      background: #ffe9ed;
+      padding: 12px;
+      border-radius: 16px;
+    }
+    .card-header h2 {
+      font-weight: 600;
+      font-size: 1.7rem;
+      letter-spacing: -0.3px;
+      color: #0b1a33;
+    }
+    .badge-adsense {
+      background: #fbbf24;
+      color: #1e293b;
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-left: auto;
+    }
+    /* ad slots */
+    .ad-slot {
+      background: #f1f5f9;
+      border-radius: 20px;
+      padding: 18px 20px;
+      margin: 25px 0 15px 0;
+      border: 1px dashed #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      transition: 0.2s;
+    }
+    .ad-slot-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #475569;
+      background: #e2e8f0;
+      padding: 4px 14px;
+      border-radius: 50px;
+      letter-spacing: 0.3px;
+    }
+    .ad-slot-content {
+      flex: 1;
+      min-width: 200px;
+      text-align: center;
+      color: #334155;
+      font-weight: 500;
+    }
+    .ad-slot-content code {
+      background: #dbeafe;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      color: #1e3a8a;
+    }
+    .ad-unit-id {
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 40px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ad-unit-id i {
+      color: #3b82f6;
+    }
+    /* form */
+    .form-group {
+      margin-bottom: 22px;
+    }
+    label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: block;
+      margin-bottom: 8px;
+      color: #1e293b;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 18px;
+      font-size: 1rem;
+      background: white;
+      transition: 0.2s;
+      outline: none;
+    }
+    input:focus, textarea:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+    }
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+    .row-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+    @media (max-width: 700px) {
+      .row-2col {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+    .btn {
+      background: #1e293b;
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 60px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: #2563eb;
+      box-shadow: 0 6px 14px rgba(37,99,235,0.25);
+    }
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: scale(1.01);
+    }
+    .btn-success {
+      background: #0b1a33;
+    }
+    .btn-success:hover {
+      background: #1e293b;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid #e2e8f0;
+      color: #1e293b;
+    }
+    .btn-outline:hover {
+      background: #f1f5f9;
+    }
+    .flex-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0 6px;
+    }
+    .chip {
+      background: #eef2f6;
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #1e293b;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chip i {
+      color: #2563eb;
+      font-size: 0.75rem;
+    }
+    .result-box {
+      background: #f8fafc;
+      border-radius: 20px;
+      padding: 20px 24px;
+      border-left: 6px solid #2563eb;
+      margin-top: 15px;
+    }
+    .result-box strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #0b1a33;
+    }
+    .result-box .value {
+      word-break: break-word;
+      background: white;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid #e9edf4;
+      margin-top: 6px;
+    }
+    .hashtag-pill {
+      background: #2563eb10;
+      border: 1px solid #2563eb30;
+      padding: 4px 16px;
+      border-radius: 40px;
+      display: inline-block;
+      margin: 4px 6px 4px 0;
+      font-size: 0.9rem;
+    }
+    .footer-text {
+      margin-top: 30px;
+      text-align: center;
+      color: #64748b;
+      font-size: 0.9rem;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 30px;
+    }
+    .inline-icon {
+      margin-right: 8px;
+    }
+    /* dynamic add */
+    .tag-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag-item {
+      background: #e9edf4;
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+    }
+    .copy-btn {
+      background: transparent;
+      border: none;
+      color: #3b82f6;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-left: 10px;
+    }
+    .copy-btn:hover {
+      color: #1d4ed8;
+    }
+    .ad-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 28px;">
+    <div>
+      <h1 style="font-size: 2.2rem; font-weight: 700; letter-spacing: -0.5px;"><i class="fab fa-youtube" style="color: #ff0033; margin-right: 10px;"></i>YouTube SEO Tool</h1>
+      <p style="color: #475569; margin-top: 4px;">Generate titles, descriptions, tags & hashtags. Optimize for visibility.</p>
+    </div>
+    <div>
+      <span class="badge-adsense"><i class="fas fa-ad"></i> AdSense ready</span>
+    </div>
+  </div>
+
+  <!-- ====== Ad Slot 1 (top) ====== -->
+  <div class="ad-slot" id="ad-slot-top">
+    <span class="ad-slot-label"><i class="fas fa-ad"></i> Ad</span>
+    <div class="ad-slot-content">
+      <span>Google AdSense — </span>
+      <span class="ad-unit-id"><i class="fas fa-code"></i> <span id="adsense-unit-top">ca-pub-xxxxxxxxxx/xxxxxxxxxx</span></span>
+      <span style="font-size:0.8rem; margin-left: 6px;">(replace with your ID)</span>
+    </div>
+    <i class="fas fa-chevron-right" style="color: #94a3b8;"></i>
+  </div>
+
+  <!-- Main card: input + generator -->
+  <div class="card">
+    <div class="card-header">
+      <i class="fas fa-wand-magic-sparkles"></i>
+      <h2>Video Optimizer</h2>
+      <span style="margin-left: auto; font-size: 0.8rem; background: #dbeafe; padding: 4px 16px; border-radius: 30px;">dynamic</span>
+    </div>
+
+    <div class="form-group">
+      <label for="videoTopic"><i class="fas fa-heading"></i> Main topic / keyword</label>
+      <input type="text" id="videoTopic" placeholder="e.g. How to cook vegan pasta" value="AI productivity tools 2026">
+    </div>
+
+    <div class="row-2col">
+      <div class="form-group">
+        <label for="extraContext"><i class="fas fa-pen"></i> Extra context (optional)</label>
+        <input type="text" id="extraContext" placeholder="e.g. productivity, AI, tools" value="productivity AI automation">
+      </div>
+      <div class="form-group">
+        <label for="toneSelect"><i class="fas fa-flag"></i> Tone</label>
+        <select id="toneSelect">
+          <option value="professional">Professional</option>
+          <option value="casual" selected>Casual & engaging</option>
+          <option value="educational">Educational</option>
+          <option value="excited">Excited / energetic</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex-buttons">
+      <button class="btn btn-primary" id="generateBtn"><i class="fas fa-rotate-right"></i> Generate SEO pack</button>
+      <button class="btn btn-outline" id="copyAllBtn"><i class="fas fa-copy"></i> Copy all</button>
+      <button class="btn btn-success" id="resetBtn"><i class="fas fa-undo-alt"></i> Reset</button>
+    </div>
+  </div>
+
+  <!-- ====== Results ====== -->
+  <div class="card" id="resultCard">
+    <div class="card-header">
+      <i class="fas fa-list-check"></i>
+      <h2>Generated SEO elements</h2>
+      <span style="margin-left: auto; font-size: 0.8rem; background: #e9edf4; padding: 4px 14px; border-radius: 30px;">optimized</span>
+    </div>
+
+    <!-- Title -->
+    <div class="form-group">
+      <label><i class="fas fa-tag"></i> Title <span style="font-weight:400; color:#64748b;">(click to copy)</span></label>
+      <div id="titleDisplay" class="result-box" style="cursor:pointer;" onclick="copyToClipboard('titleDisplay')">
+        <strong>Suggested title</strong>
+        <div class="value" id="titleValue">Boost Your Productivity with AI Tools in 2026</div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label><i class="fas fa-align-left"></i> Description</label>
+      <div id="descDisplay" class="result-box">
+        <strong>Optimized description</strong>
+        <div class="value" id="descValue">Discover the best AI productivity tools for 2026. In this video, we explore automation, time-saving hacks, and workflow optimization. Perfect for professionals and creators. Don't forget to like and subscribe!</div>
+      </div>
+    </div>
+
+    <!-- Tags + Hashtags 2 col -->
+    <div class="row-2col" style="margin-top: 10px;">
+      <div class="form-group">
+        <label><i class="fas fa-hashtag"></i> Tags <span style="font-weight:400; color:#64748b;">(comma separated)</span></label>
+        <div id="tagsDisplay" class="result-box">
+          <strong>Suggested tags</strong>
+          <div class="value" id="tagsValue">AI tools, productivity, automation, 2026, workflow, time management, AI software</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-hashtag"></i> Hashtags <span style="font-weight:400; color:#64748b;">(click to copy)</span></label>
+        <div id="hashtagDisplay" class="result-box" onclick="copyToClipboard('hashtagDisplay')" style="cursor:pointer;">
+          <strong>Trending hashtags</strong>
+          <div class="value" id="hashtagValue">#AI #Productivity #Automation #2026 #Tech #Tools</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- copy individual -->
+    <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px;">
+      <button class="btn btn-outline" onclick="copyField('titleValue')"><i class="fas fa-copy"></i> Copy Title</button>
+      <button class="btn btn-outline" onclick="copyField('descValue')"><i class="fas fa-copy"></i> Copy Description</button>
+      <button class="btn btn-outline" onclick="copyField('tagsValue')"><i class="fas fa-copy"></i> Copy Tags</button>
+      <button class="btn btn-outline" onclick="copyField('hashtagValue')"><i class="fas fa-copy"></i> Copy Hashtags</button>
+    </div>
+  </div>
+
+  <!-- ====== Ad Slot 2 (middle) ====== -->
+  <div class="ad-slot" id="ad-slot-middle">
+    <span class="ad-slot-label"><i class="fas fa-ad"></i> Ad</span>
+    <div class="ad-slot-content">
+      <span>Google AdSense — </span>
+      <span class="ad-unit-id"><i class="fas fa-code"></i> <span id="adsense-unit-middle">ca-pub-xxxxxxxxxx/xxxxxxxxxx</span></span>
+      <span style="font-size:0.8rem; margin-left: 6px;">(replace with your ID)</span>
+    </div>
+    <i class="fas fa-chevron-right" style="color: #94a3b8;"></i>
+  </div>
+
+  <!-- ====== AdSense integration code (easy insertion) ====== -->
+  <div class="card" style="background: #f1f5f9; border: 1px solid #d1d9e8;">
+    <div class="card-header">
+      <i class="fas fa-ad"></i>
+      <h2 style="font-size:1.3rem;">AdSense integration</h2>
+      <span class="badge-adsense" style="background: #3b82f6; color:white;">monetization</span>
+    </div>
+    <p style="margin-bottom: 12px;"><i class="fas fa-pen-to-square"></i> Replace the placeholder Ad Unit IDs below with your own. The ad slots above will automatically reflect the change.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; background: white; padding: 18px 22px; border-radius: 20px;">
+      <div>
+        <label style="font-weight:600; font-size:0.85rem;">Top Ad Unit ID</label>
+        <input type="text" id="adUnitTopInput" value="ca-pub-xxxxxxxxxx/xxxxxxxxxx" style="width:260px; padding: 10px 14px; border-radius: 40px; border:1px solid #cbd5e1;">
+        <button class="btn btn-outline" style="padding: 8px 18px; margin-left: 8px;" onclick="updateAdUnit('top')"><i class="fas fa-check"></i> Update</button>
+      </div>
+      <div>
+        <label style="font-weight:600; font-size:0.85rem;">Middle Ad Unit ID</label>
+        <input type="text" id="adUnitMiddleInput" value="ca-pub-xxxxxxxxxx/xxxxxxxxxx" style="width:260px; padding: 10px 14px; border-radius: 40px; border:1px solid #cbd5e1;">
+        <button class="btn btn-outline" style="padding: 8px 18px; margin-left: 8px;" onclick="updateAdUnit('middle')"><i class="fas fa-check"></i> Update</button>
+      </div>
+    </div>
+    <div style="margin-top: 16px; background: #e6edf7; padding: 12px 20px; border-radius: 40px;">
+      <code style="background: transparent; color:#1e3a8a;"><i class="fas fa-code"></i> AdSense code snippet ready: place your Ad Unit ID in the fields above.</code>
+    </div>
+  </div>
+
+  <div class="footer-text">
+    <i class="fas fa-youtube" style="color:#ff0033;"></i> YouTube SEO Tool · Optimize for visibility · All generated content is dynamic & fully customizable.
+  </div>
+</div>
+
+<script>
+  (function() {
+    "use strict";
+
+    // DOM refs
+    const topicInput = document.getElementById('videoTopic');
+    const extraInput = document.getElementById('extraContext');
+    const toneSelect = document.getElementById('toneSelect');
+    const generateBtn = document.getElementById('generateBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    const titleVal = document.getElementById('titleValue');
+    const descVal = document.getElementById('descValue');
+    const tagsVal = document.getElementById('tagsValue');
+    const hashtagVal = document.getElementById('hashtagValue');
+
+    // default state
+    let currentState = {
+      title: titleVal.innerText,
+      desc: descVal.innerText,
+      tags: tagsVal.innerText,
+      hashtags: hashtagVal.innerText,
+    };
+
+    // ---------- generation logic ----------
+    function generateSEO(topic, extra, tone) {
+      // build title
+      let title = '';
+      const toneMap = {
+        professional: 'Professional Guide',
+        casual: 'You Need to See',
+        educational: 'Master',
+        excited: '🔥 Amazing'
+      };
+      const tonePrefix = toneMap[tone] || 'Ultimate';
+      const extraWords = extra ? extra.split(' ').slice(0,2).join(' ') : '';
+      const topicClean = topic.trim() || 'video';
+      
+      if (tone === 'professional') {
+        title = `${tonePrefix} to ${topicClean} ${extraWords ? 'with '+extraWords : ''} (2026)`;
+      } else if (tone === 'casual') {
+        title = `${topicClean} ${extraWords ? '& '+extraWords : ''} – ${tonePrefix} This!`;
+      } else if (tone === 'educational') {
+        title = `${tonePrefix} ${topicClean} ${extraWords ? '& '+extraWords : ''} – Full Guide`;
+      } else if (tone === 'excited') {
+        title = `${tonePrefix} ${topicClean} ${extraWords ? 'with '+extraWords : ''} 🚀`;
+      } else {
+        title = `${topicClean} ${extraWords ? '- '+extraWords : ''} | Best Tips`;
+      }
+      // trim and ensure length
+      if (title.length > 90) title = title.substring(0,87)+'...';
+
+      // description
+      let desc = `Explore the best strategies for ${topicClean}. ${extra ? 'Learn how '+extra+' can transform your workflow.' : ''} In this video, we cover practical tips, tools, and insights to help you stay ahead. ${tone === 'professional' ? 'Optimized for professionals and creators.' : 'Perfect for beginners and experts alike.'} Don't forget to like, comment, and subscribe for more content!`;
+      if (desc.length > 300) desc = desc.substring(0,297)+'...';
+
+      // tags (comma separated)
+      let tagArr = [];
+      const topicParts = topicClean.split(' ');
+      const extraParts = extra ? extra.split(' ') : [];
+      const allWords = [...topicParts, ...extraParts, '2026', 'tutorial', 'guide', 'tips', 'howto'];
+      // unique and clean
+      const unique = [...new Set(allWords.map(w => w.replace(/[^a-zA-Z0-9]/g,'').toLowerCase()).filter(w => w.length > 1))];
+      tagArr = unique.slice(0, 8);
+      if (tagArr.length < 4) {
+        tagArr.push('seo', 'youtube', 'viral', 'trending');
+      }
+      const tags = tagArr.join(', ');
+
+      // hashtags
+      const hashtagArr = tagArr.slice(0,5).map(t => '#' + t.charAt(0).toUpperCase() + t.slice(1));
+      const hashtags = hashtagArr.join(' ');
+
+      return { title, desc, tags, hashtags };
+    }
+
+    function updateUI(data) {
+      titleVal.innerText = data.title;
+      descVal.innerText = data.desc;
+      tagsVal.innerText = data.tags;
+      hashtagVal.innerText = data.hashtags;
+      currentState = { ...data };
+    }
+
+    function generateFromInputs() {
+      const topic = topicInput.value.trim() || 'productivity tools';
+      const extra = extraInput.value.trim() || 'AI automation';
+      const tone = toneSelect.value;
+      const data = generateSEO(topic, extra, tone);
+      updateUI(data);
+    }
+
+    // ---------- copy helpers ----------
+    window.copyField = function(elementId) {
+      const el = document.getElementById(elementId);
+      if (el) {
+        const text = el.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Copied: ' + text.substring(0,30) + (text.length>30?'...':''));
+        }).catch(() => {
+          // fallback
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+          showToast('Copied!');
+        });
+      }
+    };
+
+    window.copyToClipboard = function(containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const valueDiv = container.querySelector('.value');
+      if (valueDiv) {
+        const text = valueDiv.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Copied: ' + text.substring(0,30) + (text.length>30?'...':''));
+        }).catch(() => {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+          showToast('Copied!');
+        });
+      }
+    };
+
+    window.copyAllBtn = function() {
+      const allText = `Title: ${titleVal.innerText}\nDescription: ${descVal.innerText}\nTags: ${tagsVal.innerText}\nHashtags: ${hashtagVal.innerText}`;
+      navigator.clipboard.writeText(allText).then(() => {
+        showToast('All SEO data copied!');
+      }).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = allText;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        showToast('All data copied!');
+      });
+    };
+
+    // toast
+    function showToast(msg) {
+      const old = document.querySelector('.toast-msg');
+      if (old) old.remove();
+      const div = document.createElement('div');
+      div.className = 'toast-msg';
+      div.style.position = 'fixed';
+      div.style.bottom = '30px';
+      div.style.left = '50%';
+      div.style.transform = 'translateX(-50%)';
+      div.style.background = '#0b1a33';
+      div.style.color = 'white';
+      div.style.padding = '12px 28px';
+      div.style.borderRadius = '60px';
+      div.style.boxShadow = '0 12px 30px rgba(0,0,0,0.2)';
+      div.style.fontWeight = '500';
+      div.style.zIndex = '9999';
+      div.style.fontSize = '0.95rem';
+      div.innerText = msg;
+      document.body.appendChild(div);
+      setTimeout(() => { div.style.opacity = '0.8'; div.style.transition = '0.3s'; }, 100);
+      setTimeout(() => { div.remove(); }, 2600);
+    }
+
+    // reset to default
+    window.resetBtn = function() {
+      topicInput.value = 'AI productivity tools 2026';
+      extraInput.value = 'productivity AI automation';
+      toneSelect.value = 'casual';
+      generateFromInputs();
+      showToast('Reset to default');
+    };
+
+    // AdSense update
+    window.updateAdUnit = function(position) {
+      let inputId = position === 'top' ? 'adUnitTopInput' : 'adUnitMiddleInput';
+      let spanId = position === 'top' ? 'adsense-unit-top' : 'adsense-unit-middle';
+      const input = document.getElementById(inputId);
+      const span = document.getElementById(spanId);
+      if (input && span) {
+        const val = input.value.trim() || 'ca-pub-xxxxxxxxxx/xxxxxxxxxx';
+        span.innerText = val;
+        showToast(`Ad unit updated (${position})`);
+      }
+    };
+
+    // event listeners
+    generateBtn.addEventListener('click', generateFromInputs);
+    resetBtn.addEventListener('click', window.resetBtn);
+
+    // copy all
+    document.getElementById('copyAllBtn').addEventListener('click', window.copyAllBtn);
+
+    // initial generation
+    generateFromInputs();
+
+    // sync AdSense input placeholders with displayed
+    document.getElementById('adUnitTopInput').addEventListener('change', function() {
+      document.getElementById('adsense-unit-top').innerText = this.value || 'ca-pub-xxxxxxxxxx/xxxxxxxxxx';
+    });
+    document.getElementById('adUnitMiddleInput').addEventListener('change', function() {
+      document.getElementById('adsense-unit-middle').innerText = this.value || 'ca-pub-xxxxxxxxxx/xxxxxxxxxx';
+    });
+
+  })();
+</script>
+<!-- optional toast style consistency -->
+</body>
+</html>
